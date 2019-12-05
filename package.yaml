@@ -19,11 +19,20 @@ extra-source-files:
 # common to point users to the README.md file.
 description:         Please see the README on GitHub at <https://github.com/githubuser/custom-monads#readme>
 
+default-extensions:
+  - BlockArguments
+  - LambdaCase
+  - ScopedTypeVariables
+  - OverloadedStrings
+
 dependencies:
 - base >= 4.7 && < 5
 
 library:
   source-dirs: src
+  dependencies:
+    - containers
+    - text
 
 executables:
   custom-monads-exe:
@@ -33,6 +42,8 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    - -Wall
+    - -Werror
     dependencies:
     - custom-monads
 
