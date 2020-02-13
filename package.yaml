@@ -24,9 +24,12 @@ default-extensions:
   - LambdaCase
   - ScopedTypeVariables
   - OverloadedStrings
+  - GeneralizedNewtypeDeriving
+  - DeriveFunctor
 
 dependencies:
 - base >= 4.7 && < 5
+- transformers
 
 library:
   source-dirs: src

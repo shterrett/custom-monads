@@ -1,6 +1,9 @@
 module Final where
 
+import Control.Monad.IO.Class (MonadIO, liftIO)
+import Control.Monad.Trans.State (StateT (..), gets, modify)
 import Data.Set (Set)
+import qualified Data.Set as S
 import Data.Text (Text)
 import qualified Data.Text as T
 import Utils
@@ -44,3 +47,24 @@ continueIncorrect err = do
     NotChar ->
       showOutput "Please enter a character between a and z"
   loseGame <$> incorrectGuesses
+
+data GameState
+  = GameState
+      { _target :: Target,
+        _correct :: Set Char,
+        _incorrect :: Set Char,
+        _threshold :: Int
+      }
+
+newtype Runner a = Runner {unRunner :: StateT GameState IO a}
+  deriving (Functor, Applicative, Monad, MonadIO)
+
+instance Hangman Runner where
+  getInput = T.singleton <$> liftIO getChar
+  showOutput = liftIO . putStrLn . T.unpack
+  targetWord = Runner $ gets _target
+  correctGuesses = Runner $ gets _correct
+  incorrectGuesses = Runner $ gets _incorrect
+  putCorrect c = Runner $ modify (\s -> s {_correct = S.insert c (_correct s)})
+  putIncorrect c = Runner $ modify (\s -> s {_incorrect = S.insert c (_incorrect s)})
+  threshold = Runner $ gets _threshold
