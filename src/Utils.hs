@@ -80,3 +80,11 @@ winGame (Target t) correct =
 
 maxMisses :: Int
 maxMisses = 5
+
+data GameState
+  = GameState
+      { _target :: Target,
+        _correct :: Set Char,
+        _incorrect :: Set Char,
+        _threshold :: Int
+      }

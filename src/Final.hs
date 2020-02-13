@@ -48,14 +48,6 @@ continueIncorrect err = do
       showOutput "Please enter a character between a and z"
   loseGame <$> incorrectGuesses
 
-data GameState
-  = GameState
-      { _target :: Target,
-        _correct :: Set Char,
-        _incorrect :: Set Char,
-        _threshold :: Int
-      }
-
 newtype Runner a = Runner {unRunner :: StateT GameState IO a}
   deriving (Functor, Applicative, Monad, MonadIO)
 
