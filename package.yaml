@@ -26,6 +26,7 @@ default-extensions:
   - OverloadedStrings
   - GeneralizedNewtypeDeriving
   - DeriveFunctor
+  - RankNTypes
 
 dependencies:
 - base >= 4.7 && < 5
